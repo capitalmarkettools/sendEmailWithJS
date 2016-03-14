@@ -1,0 +1,35 @@
+This is the 7th in a series of posts leading up to Node.js Knockout on using Nodemailer. This post was written by Node Knockout judge and Nodemailer creator Andris Reinman.
+tl;dr — How to send an e-mail using Nodemailer
+
+Install Nodemailer
+> npm install nodemailer
+Include the module in your script and create a reusable transport object
+var nodemailer = require("nodemailer");
+
+var smtpTransport = nodemailer.createTransport("SMTP",{
+   service: "Gmail",
+   auth: {
+       user: "gmail.user@gmail.com",
+       pass: "gmailpass"
+   }
+});
+Send an e-mail using the connection object
+smtpTransport.sendMail({
+   from: "My Name <me@example.com>", // sender address
+   to: "Your Name <you@example.com>", // comma separated list of receivers
+   subject: "Hello ✔", // Subject line
+   text: "Hello world ✔" // plaintext body
+}, function(error, response){
+   if(error){
+       console.log(error);
+   }else{
+       console.log("Message sent: " + response.message);
+   }
+});
+Send another e-mail without caring about the outcome (or add the callback function as well, like in the previous code block, if you do care)
+smtpTransport.sendMail({
+   from: "My Name <me@example.com>", // sender address
+   to: "Your Name <you@example.com>", // comma separated list of receivers
+   subject: "Hello ✔", // Subject line
+   text: "Hello world ✔" // plaintext body
+});
